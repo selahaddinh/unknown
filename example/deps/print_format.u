@@ -1,0 +1,59 @@
+//! Format print implementation
+
+const char FORMAT_START = '{';
+const char FORMAT_END   = '}';
+
+const u16 FLAG_PREFIX = 0x0001;
+const u16 FLAG_LEFT   = 0x0002;
+const u16 FLAG_SIZE   = 0x0004;
+const u16 FLAG_SPACE  = 0x0008;
+
+pub func print_format(const char* format, char* buf, ...) -> maybe s32 {
+
+    // Check the input buffer
+    if buf == 0 {
+        return none;
+    }
+
+    loop *format != 0; format++ {
+        char c = *format;
+
+        if c != FORMAT_START {
+            *buf++ = c;
+            continue;
+        }
+
+        // Skip any delimiter
+        if c == ':' {
+            format++;
+            c = *format;
+        }
+
+        loop *format++ {
+            if c == '!' {
+                flags |= FLAG_LEFT;
+            } else if c == '<' {
+                flags |= FLAG_LEFT;
+            } else if c == ' ' {
+                flags |= FLAG_LEFT;
+            } else if c == '_' {
+                flags |= FLAG_LEFT;
+            } else {
+                break;
+            }
+        }
+
+        // Skip any delimiter
+        if c == ':' {
+            format++;
+            c = *format;
+        }
+
+        // Skip any format end character
+        if c == FORMAT_END {
+            format++;
+        }
+    }
+
+    return 10;
+}

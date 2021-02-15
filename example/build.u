@@ -1,0 +1,30 @@
+//! Build script for the unknown language
+
+use <compiler> as compiler;
+use <linker> as linker;
+
+const char* PROGRAM_NAME = "appication.exe";
+
+// Our start of flash address
+const u32 PROGRAM_START_ADDR = 0x8000_0000;
+
+func linker() {
+    // Linker address variable
+    pointer* addr <= PROGRAM_START_ADDR;
+
+    linker::add_section("<data>", &addr);
+    linker::align_addr(&addr, 512);
+    linker::add_section("<text>", &addr);
+}
+
+func build() {
+
+    // Add the common source files
+    compiler::add_file("deps/print_format.u");
+
+    compiler::add_file("source/hardware.u");
+    compiler::add_file("source/main.u");
+    compiler::add_file("source/print.u");
+
+    compiler::output_dir("build/" + PROGRAM_NAME);
+}

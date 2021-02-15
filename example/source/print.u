@@ -1,0 +1,23 @@
+//! Serial print implementation
+
+use <source/hardware.u> as hardware;
+use <deps/print_format.u>
+
+// Print buffer
+u8 print_buffer[1024];
+
+func print(const char* data, ...) {
+
+    // Format the buffer
+    u32 size = print_format(data, print_buffer, ...);
+
+    // Get the hardware
+    struct uart_reg* const uart_reg = hardware::uart_reg;
+    
+    loop *data; data++ {
+        loop regs->sr.bit[5] == 0;
+
+        // Send the data
+        regs->send.bit[0..7] <= *data;
+    }
+}

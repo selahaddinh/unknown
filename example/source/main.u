@@ -1,0 +1,32 @@
+//! Test program
+
+use <source/print.u> as print;
+use <source/error.u>
+
+func read() -> maybe u32 {
+    
+    volatile u32* ptr = 0x20000000;
+
+    if *ptr != 0x99 {
+        return none;
+    } else {
+        return 
+    }
+
+    return none;
+} 
+
+struct test {
+    u32 data;
+    char* name;
+}
+
+func main() -> maybe u32 {
+    print::print("This is an example Unknown application");
+    
+    const print::struct::file* file = { .file = "this" };
+
+    struct::test* data;
+
+    return none;
+}
