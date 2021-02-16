@@ -1,7 +1,7 @@
 //! Build script for the unknown language
 
-use <compiler> as compiler;
-use <linker> as linker;
+use compiler as compiler;
+use linker as linker;
 
 const char* PROGRAM_NAME = "appication.exe";
 

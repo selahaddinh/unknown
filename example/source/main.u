@@ -1,32 +1,38 @@
 //! Test program
 
-use <source/print.u> as print;
-use <source/error.u>
+use source/print.u as print;
+use source/error.u;
 
-func read() -> maybe u32 {
-    
-    volatile u32* ptr = 0x20000000;
+func read_io() -> option u32 {
+
+    // Some random IO location
+    volatile u32* ptr <= 0x20000000;
 
     if *ptr != 0x99 {
         return none;
     } else {
-        return 
+        return 0x09;
     }
 
     return none;
 } 
 
-struct test {
+struct Test {
     u32 data;
     char* name;
 }
 
-func main() -> maybe u32 {
+// Main loop
+func main() -> option u32 {
     print::print("This is an example Unknown application");
+
+    const Test* ptr <= read_io();
+
+    if ptr == none {
+        return none;
+    }
+
+    print::print("Read IO {u32*} \n", ptr->name);
     
-    const print::struct::file* file = { .file = "this" };
-
-    struct::test* data;
-
     return none;
 }

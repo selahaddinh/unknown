@@ -1,23 +1,23 @@
 //! Serial print implementation
 
-use <source/hardware.u> as hardware;
-use <deps/print_format.u>
+use source/hardware.u as hardware;
+use deps/print_format.u;
 
-// Print buffer
 u8 print_buffer[1024];
 
-func print(const char* data, ...) {
+// Prints a formatted string onto the serial port. This will do a blocking write until all
+// all the data has been shifted out on the port
+pub func print(const char* data, ...) {
 
     // Format the buffer
     u32 size = print_format(data, print_buffer, ...);
 
-    // Get the hardware
-    struct uart_reg* const uart_reg = hardware::uart_reg;
-    
-    loop *data; data++ {
-        loop regs->sr.bit[5] == 0;
+    // Get a pointer to the hardware
+    hardware::Uart_reg* regs = hardware::UART_REG;
 
-        // Send the data
-        regs->send.bit[0..7] <= *data;
+    for ; *data; data++ {
+        // Wait for the last character to be transmitted onto the line
+        while regs->sr.bit[5] == 0;
+        regs->send.bit[8..15] = *data;
     }
 }

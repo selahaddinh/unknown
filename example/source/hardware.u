@@ -1,21 +1,21 @@
 //! Hardware definitions for the SAMA5 microprocessor
 
-[no-optimize]
-pub struct uart_reg {
+[volatile]
+pub struct Uart_reg {
     u32 thr;
     u32 sr;
     u32 cr;
-    }
+}
 
-[no-optimize]
-pub struct gpio_reg {
+[volatile]
+pub struct Gpio_reg {
     u32 set_reg;
     u32 clear_reg;
     u32 sr;
 }
 
-[no-optimize]
-pub struct nic_reg {
+[volatile] [packed]
+pub struct Nic_reg {
     u32 rec;
     u32 send;
     u32 sr;
@@ -23,6 +23,7 @@ pub struct nic_reg {
     u32 stats;
 }
 
-pub struct uart_reg* const uart_reg <= 0x34000000;
-pub struct gpio_reg* const gpio_reg <= 0x45000000;
-pub struct nic_reg*  const nic_reg  <= 0x55005500;
+// Address base of the peripherals
+pub Uart_reg* const UART_REG <= 0x34000000;
+pub Gpio_reg* const GPIO_REG <= 0x45000000;
+pub Nic_reg*  const NIC_REG  <= 0x55005500;
