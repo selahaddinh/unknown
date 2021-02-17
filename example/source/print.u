@@ -1,7 +1,7 @@
 //! Serial print implementation
 
-use source/hardware.u as hardware;
-use deps/print_format.u;
+use <source/hardware.u> as hardware;
+use <deps/print_format.u>
 
 u8 print_buffer[1024];
 
@@ -12,12 +12,15 @@ pub func print(const char* data, ...) {
     // Format the buffer
     u32 size = print_format(data, print_buffer, ...);
 
+    size.bit[6..9] = 5;
+
     // Get a pointer to the hardware
     hardware::Uart_reg* regs = hardware::UART_REG;
 
     for ; *data; data++ {
         // Wait for the last character to be transmitted onto the line
         while regs->sr.bit[5] == 0;
-        regs->send.bit[8..15] = *data;
+
+        regs->thr.bit[8..15] = *data;
     }
 }

@@ -25,3 +25,30 @@ void* memory_alloc(u32 size) {
 void memory_free(void* ptr) {
     free(ptr);
 }
+
+i32 read_file(const char* file_name, char** ptr, u32* size) {
+    FILE* file = fopen(file_name, "r");
+    if (file == NULL) {
+        return -1;
+    }
+
+    // Check the file size
+    fseek(file, 0l, SEEK_END);
+    u32 s = ftell(file);
+
+    // Set the pointer back to the beginning again
+    fseek(file, 0l, SEEK_SET);
+
+    print("Found file with size {u} \n", s);
+
+    // Allocate a new buffer for the file content
+    *ptr = memory_alloc(s);
+    *size = s;
+
+    // Read the content of the file into the buffer 
+    u32 bytes_read = fread(*ptr, 1, s, file);
+    if (bytes_read != s) {
+        print("error\n");
+    }
+    fclose(file);
+}

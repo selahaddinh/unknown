@@ -1,13 +1,15 @@
 // Tokenizer implementation
 
-#ifndef TOKENIZER_H
-#define TOKENIZER_H
+#ifndef LEXER_H
+#define LEXER_H
+
+#include <unknown/types.h>
 
 struct token {
     char* data;
 };
 
-struct tokenizer {
+struct lexer {
 
     // Column and row of the program
     u32 col;
@@ -27,6 +29,6 @@ struct tokenizer {
     struct token token;
 };
 
-void get_next_token(struct tokenizer* t);
+void get_next_token(struct lexer* lex);
 
 #endif

@@ -1,6 +1,0 @@
-//! Error code implementation
-
-pub enum Error_type {
-    FILE_ERROR,
-    IO_ERROR
-}

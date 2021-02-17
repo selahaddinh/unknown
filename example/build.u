@@ -1,7 +1,7 @@
 //! Build script for the unknown language
 
-use compiler as compiler;
-use linker as linker;
+use <compiler> as compiler;
+use <linker> as linker;
 
 const char* PROGRAM_NAME = "appication.exe";
 
@@ -12,19 +12,23 @@ func linker() {
     // Linker address variable
     pointer* addr <= PROGRAM_START_ADDR;
 
-    linker::add_section("<data>", &addr);
-    linker::align_addr(&addr, 512);
-    linker::add_section("<text>", &addr);
+    // Add the code and initialized data
+    linker::add_section("text", &addr);
+    linker::add_section("data", &addr);
+
+    linker::align(&addr, 512);
+
+    linker::add_section("nulldata", &addr);
 }
 
 func build() {
 
     // Add the common source files
     compiler::add_file("deps/print_format.u");
+    compiler::add_file("source/print.u");
 
     compiler::add_file("source/hardware.u");
     compiler::add_file("source/main.u");
-    compiler::add_file("source/print.u");
 
     compiler::output_dir("build/" + PROGRAM_NAME);
 }

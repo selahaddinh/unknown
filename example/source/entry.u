@@ -1,15 +1,14 @@
 //! Entry ASM code
 
-use build.u as build;
-use source/main.u;
+use <source/main.u>
 
 // The CPU will start executing from this address 
-[section <entry_point>] [addr <build::start_cache>]
+[section entry_point]
 asm entry() {
 
         // Check the program counter
         ldr r5, pc
-    label:
+label:
         mov u5, #5
         add r5, r5, #2
         beq label

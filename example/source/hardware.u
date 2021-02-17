@@ -1,6 +1,7 @@
 //! Hardware definitions for the SAMA5 microprocessor
 
 [volatile]
+[packed]
 pub struct Uart_reg {
     u32 thr;
     u32 sr;
@@ -8,19 +9,21 @@ pub struct Uart_reg {
 }
 
 [volatile]
+[packed]
 pub struct Gpio_reg {
-    u32 set_reg;
-    u32 clear_reg;
+    u32 odsr;
+    u32 codr;
     u32 sr;
 }
 
-[volatile] [packed]
+[volatile]
+[packed]
 pub struct Nic_reg {
-    u32 rec;
-    u32 send;
+    u32 cr;
+    u32 csr;
     u32 sr;
-    u32 data;
-    u32 stats;
+    u32 ier;
+    u32 idr;
 }
 
 // Address base of the peripherals
