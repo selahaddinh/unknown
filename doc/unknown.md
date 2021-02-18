@@ -2,7 +2,7 @@
   <img src="https://github.com/strawberryhacker/pictures/blob/main/questionmark.png", width=100>
 </p>
 
-*This will give a breif overview over the unknown language. I will probably come with some personal preferences during the document. This is just my opinion, and I do not intend to offent anyone not following these*
+*This will give a breif overview over the unknown language. I will probably come with some personal preferences during the document. This is just my opinion, and I do not intend to offend anyone not following these*
 
 ### Variables
 
